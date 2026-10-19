@@ -45,14 +45,18 @@ body{background:radial-gradient(circle at 8% 12%,#dbeafe 0,transparent 28%),radi
 </head>
 <body>
 <div class="money-scene" id="moneyScene" aria-hidden="true"></div>
-<header><div class="wrap"><div class="head"><div class="brand"><div class="logo">💰</div><div><h1>Dompet & Tabungan</h1><p>Atur uangmu dengan lebih terencana.</p></div></div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><button id="soundToggle" type="button" class="btn-light" aria-pressed="true" style="padding:9px 12px">🔊 Suara aktif</button><span class="tag">KEUANGAN PRIBADI</span></div></div></div></header>
+<header><div class="wrap"><div class="head"><div class="brand"><div class="logo">💰</div><div><h1>Dompet & Tabungan</h1><p>Atur uangmu dengan lebih terencana.</p></div></div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="tag">KEUANGAN PRIBADI</span></div></div></div></header>
 <div class="wrap">
  <section class="music-card" aria-label="Musik latar">
   <div class="music-disc" aria-hidden="true">🎵</div>
   <div class="music-copy"><strong>Musik Latar</strong><small>Musik MP3 lokal sambil mengatur tabungan.</small></div>
-  <div class="music-actions"><button id="musicToggle" class="music-btn" type="button" aria-expanded="false">▶ Putar musik</button><span class="music-link">Musik lokal · MP3</span></div>
+  <div class="music-actions">
+   <button id="musicToggle" class="music-btn" type="button" aria-expanded="false">▶ Putar musik</button>
+   <button id="nextMusic" class="music-btn" type="button" title="Putar musik selanjutnya">⏭ Musik selanjutnya</button>
+   <span class="music-link" id="currentTrackLabel">DJ YA ODNA X THE DRUM</span>
+  </div>
  </section>
- <div id="musicPanel" class="music-panel" aria-hidden="true"><audio id="backgroundMusic" controls loop preload="auto" playsinline style="width:100%;max-width:520px"><source src="./musik-latar.mp3" type="audio/mpeg">Browser kamu tidak mendukung audio.</audio></div>
+ <div id="musicPanel" class="music-panel" aria-hidden="true"><audio id="backgroundMusic" controls preload="auto" playsinline style="width:100%;max-width:520px"><source src="./track-1.mp3" type="audio/mpeg">Browser kamu tidak mendukung audio.</audio></div>
 </div>
 <main class="wrap">
 
@@ -154,8 +158,6 @@ body{background:radial-gradient(circle at 8% 12%,#dbeafe 0,transparent 28%),radi
    if(navigator.vibrate) navigator.vibrate(kind==='Pengeluaran'?[18,25,18]:[18]);
   }catch(err){ /* Suara opsional; transaksi tetap berjalan jika audio tidak didukung. */ }
  }
- const soundToggle=document.getElementById('soundToggle');
- if(soundToggle){soundToggle.addEventListener('click',()=>{soundEnabled=!soundEnabled;soundToggle.textContent=soundEnabled?'🔊 Suara aktif':'🔇 Suara mati';soundToggle.setAttribute('aria-pressed',String(soundEnabled));if(soundEnabled)playTransactionSound('Pemasukan')})}
 
  let state={wallet:0,savings:0,totalIncome:0,target:2000000,history:[],mode:'Menabung'};
  try{const x=JSON.parse(localStorage.getItem(STORE));if(x&&Array.isArray(x.history))state={...state,...x}}catch(e){}
@@ -193,8 +195,16 @@ body{background:radial-gradient(circle at 8% 12%,#dbeafe 0,transparent 28%),radi
 })();
 
  const musicToggle=document.getElementById('musicToggle');
+ const nextMusic=document.getElementById('nextMusic');
  const musicPanel=document.getElementById('musicPanel');
  const backgroundMusic=document.getElementById('backgroundMusic');
+ const currentTrackLabel=document.getElementById('currentTrackLabel');
+ const playlist=[
+  {src:'./track-1.mp3',title:'DJ YA ODNA X THE DRUM'},
+  {src:'./track-2.mp3',title:'Jennifer Lopez - On The Floor ft. Pitbull'},
+  {src:'./track-3.mp3',title:'DJ Dalinda Old 2019 (Slowed & Reverb)'}
+ ];
+ let currentTrack=0;
  if(musicToggle&&musicPanel&&backgroundMusic){
   backgroundMusic.volume=0.35;
   function updateMusicUI(playing){
@@ -203,20 +213,28 @@ body{background:radial-gradient(circle at 8% 12%,#dbeafe 0,transparent 28%),radi
    musicToggle.textContent=playing?'⏸ Jeda musik':'▶ Putar musik';
    musicToggle.setAttribute('aria-expanded',String(playing));
   }
+  function loadTrack(index,autoplay=true){
+   currentTrack=(index+playlist.length)%playlist.length;
+   backgroundMusic.src=playlist[currentTrack].src;
+   backgroundMusic.load();
+   if(currentTrackLabel) currentTrackLabel.textContent=playlist[currentTrack].title;
+   if(autoplay) startBackgroundMusic();
+  }
   async function startBackgroundMusic(){
    try { await backgroundMusic.play(); updateMusicUI(true); }
    catch(err) {
-    // Browser iPhone may block autoplay with sound until the user taps.
     updateMusicUI(false);
     musicToggle.textContent='▶ Ketuk untuk memutar';
    }
   }
   function stopBackgroundMusic(){ backgroundMusic.pause(); updateMusicUI(false); }
   musicToggle.addEventListener('click',()=>backgroundMusic.paused?startBackgroundMusic():stopBackgroundMusic());
+  if(nextMusic) nextMusic.addEventListener('click',()=>loadTrack(currentTrack+1,true));
+  backgroundMusic.addEventListener('ended',()=>loadTrack(currentTrack+1,true));
   backgroundMusic.addEventListener('play',()=>updateMusicUI(true));
   backgroundMusic.addEventListener('pause',()=>updateMusicUI(false));
-  // Try autoplay on entry; if blocked, the button remains available.
-  window.addEventListener('load',()=>{startBackgroundMusic()},{once:true});
+  // Coba autoplay saat halaman dibuka; iPhone mungkin meminta ketukan pertama.
+  window.addEventListener('load',()=>{loadTrack(0,true)},{once:true});
  }
 </script>
 </body>
