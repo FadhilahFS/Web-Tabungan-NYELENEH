@@ -49,10 +49,10 @@ body{background:radial-gradient(circle at 8% 12%,#dbeafe 0,transparent 28%),radi
 <div class="wrap">
  <section class="music-card" aria-label="Musik latar">
   <div class="music-disc" aria-hidden="true">🎵</div>
-  <div class="music-copy"><strong>Musik Latar</strong><small>Putar musik YouTube favoritmu sambil mengatur tabungan.</small></div>
-  <div class="music-actions"><button id="musicToggle" class="music-btn" type="button" aria-expanded="false">▶ Putar musik</button><a class="music-link" href="https://youtu.be/9w_SAvZmSjg?si=cPLsRMrsCxcX0yTT" target="_blank" rel="noopener">Buka di YouTube ↗</a></div>
+  <div class="music-copy"><strong>Musik Latar</strong><small>Musik MP3 lokal sambil mengatur tabungan.</small></div>
+  <div class="music-actions"><button id="musicToggle" class="music-btn" type="button" aria-expanded="false">▶ Putar musik</button><span class="music-link">Musik lokal · MP3</span></div>
  </section>
- <div id="musicPanel" class="music-panel" aria-hidden="true"><iframe class="yt-player" id="youtubeMusic" title="Musik YouTube" src="about:blank" data-src="https://www.youtube-nocookie.com/embed/9w_SAvZmSjg?autoplay=1&controls=1&loop=1&playlist=9w_SAvZmSjg&playsinline=1" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+ <div id="musicPanel" class="music-panel" aria-hidden="true"><audio id="backgroundMusic" controls loop preload="auto" playsinline style="width:100%;max-width:520px"><source src="./musik-latar.mp3" type="audio/mpeg">Browser kamu tidak mendukung audio.</audio></div>
 </div>
 <main class="wrap">
 
@@ -194,20 +194,29 @@ body{background:radial-gradient(circle at 8% 12%,#dbeafe 0,transparent 28%),radi
 
  const musicToggle=document.getElementById('musicToggle');
  const musicPanel=document.getElementById('musicPanel');
- const youtubeMusic=document.getElementById('youtubeMusic');
- if(musicToggle&&musicPanel&&youtubeMusic){
-  function startBackgroundMusic(){
-   youtubeMusic.src=youtubeMusic.dataset.src;
-   musicPanel.classList.add('open');musicPanel.setAttribute('aria-hidden','false');
-   musicToggle.textContent='⏸ Tutup musik';musicToggle.setAttribute('aria-expanded','true');
+ const backgroundMusic=document.getElementById('backgroundMusic');
+ if(musicToggle&&musicPanel&&backgroundMusic){
+  backgroundMusic.volume=0.35;
+  function updateMusicUI(playing){
+   musicPanel.classList.toggle('open',playing);
+   musicPanel.setAttribute('aria-hidden',String(!playing));
+   musicToggle.textContent=playing?'⏸ Jeda musik':'▶ Putar musik';
+   musicToggle.setAttribute('aria-expanded',String(playing));
   }
-  function stopBackgroundMusic(){
-   youtubeMusic.src='about:blank';musicPanel.classList.remove('open');musicPanel.setAttribute('aria-hidden','true');
-   musicToggle.textContent='▶ Putar musik';musicToggle.setAttribute('aria-expanded','false');
+  async function startBackgroundMusic(){
+   try { await backgroundMusic.play(); updateMusicUI(true); }
+   catch(err) {
+    // Browser iPhone may block autoplay with sound until the user taps.
+    updateMusicUI(false);
+    musicToggle.textContent='▶ Ketuk untuk memutar';
+   }
   }
-  musicToggle.addEventListener('click',()=>musicPanel.classList.contains('open')?stopBackgroundMusic():startBackgroundMusic());
-  // Coba mulai otomatis saat halaman dibuka. Browser iPhone bisa membatasi autoplay bersuara.
-  window.addEventListener('DOMContentLoaded',()=>{startBackgroundMusic()},{once:true});
+  function stopBackgroundMusic(){ backgroundMusic.pause(); updateMusicUI(false); }
+  musicToggle.addEventListener('click',()=>backgroundMusic.paused?startBackgroundMusic():stopBackgroundMusic());
+  backgroundMusic.addEventListener('play',()=>updateMusicUI(true));
+  backgroundMusic.addEventListener('pause',()=>updateMusicUI(false));
+  // Try autoplay on entry; if blocked, the button remains available.
+  window.addEventListener('load',()=>{startBackgroundMusic()},{once:true});
  }
 </script>
 </body>
