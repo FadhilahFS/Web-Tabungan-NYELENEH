@@ -8,30 +8,46 @@
 <style>
 :root{--bg:#f3f6fb;--card:#fff;--ink:#152238;--muted:#68758a;--line:#e1e8f0;--blue:#1d4ed8;--green:#15803d;--red:#b91c1c;--navy:#163b69}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-header{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(135deg,#102b50,#2563eb 65%,#6d5dfc);color:#fff;padding:26px 16px 62px;box-shadow:0 18px 45px #163b6930}header:before,header:after{content:"";position:absolute;z-index:-1;border-radius:50%;filter:blur(1px);pointer-events:none}header:before{width:210px;height:210px;right:-55px;top:-85px;background:linear-gradient(145deg,#ffffff35,#ffffff04);border:1px solid #ffffff35;animation:floatOrb 8s ease-in-out infinite}header:after{width:115px;height:115px;right:28%;bottom:-70px;background:linear-gradient(145deg,#93c5fd55,#ffffff05);border:1px solid #ffffff2b;animation:floatOrb 7s ease-in-out infinite reverse}.wrap{max-width:980px;margin:auto;padding:0 16px}
+header{background:linear-gradient(135deg,#102b50,#2563eb);color:#fff;padding:26px 16px 62px}.wrap{max-width:980px;margin:auto;padding:0 16px}
 .head{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:14px;background:#ffffff20;display:grid;place-items:center;font-size:25px}
 h1{font-size:clamp(23px,4vw,32px);line-height:1.2;margin:0 0 5px}header p{color:#dbeafe;margin:0;font-size:14px}.tag{border:1px solid #ffffff55;border-radius:999px;padding:6px 10px;font-size:12px;white-space:nowrap}
 main{margin-top:-38px;padding-bottom:35px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-.card{position:relative;background:var(--card);border:1px solid #ffffffd9;border-radius:20px;padding:18px;box-shadow:0 10px 28px #14213d0b,0 2px 5px #14213d05;min-width:0;transition:transform .25s ease,box-shadow .25s ease;animation:cardEnter .65s both;transform-style:preserve-3d}.card:hover{transform:translateY(-4px) rotateX(1deg);box-shadow:0 18px 36px #14213d14}.cards .card:nth-child(2){animation-delay:.08s}.cards .card:nth-child(3){animation-delay:.16s}.balance{background:linear-gradient(135deg,#163b69,#1d4ed8 75%,#6366f1);box-shadow:0 14px 32px #1d4ed833}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 8px 25px #14213d0b;min-width:0}
 .balance{background:var(--navy);color:white;border:0}.balance .muted{color:#c9dcf4}.muted{color:var(--muted);font-size:13px}.big{font-size:clamp(24px,5vw,34px);font-weight:800;letter-spacing:-.7px;overflow-wrap:anywhere;margin:5px 0}.smallbig{font-size:clamp(19px,3vw,25px);font-weight:750;margin:4px 0}
 .section{margin-top:17px}.title{font-size:19px;margin:0 0 13px}.label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
-input,select,button{font:inherit}input,select{width:100%;min-width:0;border:1px solid #d5deea;border-radius:13px;padding:14px;background:#fff;color:var(--ink);outline:none;appearance:none;-webkit-appearance:none;font-size:16px}input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2563eb18}
-.field{margin-bottom:13px}.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}button{border:0;border-radius:13px;padding:13px 14px;font-weight:750;cursor:pointer;transition:transform .18s ease,filter .18s ease,box-shadow .18s ease;touch-action:manipulation}button:not(:disabled):active{transform:scale(.98) translateY(1px)}button:not(:disabled):hover{filter:brightness(1.04);box-shadow:0 7px 16px #1d4ed81c}.btn-blue{background:var(--blue);color:#fff}.btn-green{background:#15803d;color:#fff}.btn-red{background:#b91c1c;color:#fff}.btn-light{background:#eef4ff;color:#1d4ed8}.btn-outline{background:white;border:1px solid var(--line);color:var(--ink)}button:disabled{opacity:.45;cursor:not-allowed}
+input,select,button{font:inherit}input,select{width:100%;border:1px solid #d5deea;border-radius:11px;padding:12px;background:#fff;color:var(--ink);outline:none}input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2563eb18}
+.field{margin-bottom:13px}.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}button{border:0;border-radius:11px;padding:12px 14px;font-weight:750;cursor:pointer}.btn-blue{background:var(--blue);color:#fff}.btn-green{background:#15803d;color:#fff}.btn-red{background:#b91c1c;color:#fff}.btn-light{background:#eef4ff;color:#1d4ed8}.btn-outline{background:white;border:1px solid var(--line);color:var(--ink)}button:disabled{opacity:.45;cursor:not-allowed}
 .mode{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}.mode button{border:1px solid var(--line);background:white;color:var(--ink);padding:14px 10px}.mode button.active-save{background:#dcfce7;border-color:#16a34a;color:#166534}.mode button.active-spend{background:#fee2e2;border-color:#dc2626;color:#991b1b}.mode .emoji{display:block;font-size:23px;margin-bottom:4px}.mode small{display:block;font-size:11px;font-weight:500;margin-top:3px}
-.progress{height:10px;border-radius:99px;background:#e9eef5;overflow:hidden;margin:10px 0}.progress span{display:block;height:100%;background:linear-gradient(90deg,#16a34a,#4ade80);border-radius:99px;transition:width .65s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 12px #22c55e55}.between{display:flex;align-items:center;justify-content:space-between;gap:10px}.between strong{white-space:nowrap}.note{font-size:12px;color:var(--muted);margin-top:10px}
-.history{display:grid;gap:0}.item{display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}.ico{width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,#eef4ff,#dbeafe);display:grid;place-items:center;font-size:20px;flex-shrink:0;box-shadow:inset 0 1px 0 #fff;transition:transform .25s}.item:hover .ico{transform:rotate(-7deg) translateY(-2px)}.item-main{flex:1;min-width:0}.item-main strong{display:block;overflow-wrap:anywhere}.item-main small{color:var(--muted)}.amt{font-weight:800;text-align:right;white-space:nowrap}.positive{color:var(--green)}.negative{color:var(--red)}.empty{text-align:center;padding:22px;color:var(--muted);font-size:13px}.footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 25px}
+.progress{height:10px;border-radius:99px;background:#e9eef5;overflow:hidden;margin:10px 0}.progress span{display:block;height:100%;background:#16a34a;border-radius:99px;transition:width .2s}.between{display:flex;align-items:center;justify-content:space-between;gap:10px}.between strong{white-space:nowrap}.note{font-size:12px;color:var(--muted);margin-top:10px}
+.history{display:grid;gap:0}.item{display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}.ico{width:40px;height:40px;border-radius:12px;background:#eef4ff;display:grid;place-items:center;font-size:20px;flex-shrink:0}.item-main{flex:1;min-width:0}.item-main strong{display:block;overflow-wrap:anywhere}.item-main small{color:var(--muted)}.amt{font-weight:800;text-align:right;white-space:nowrap}.positive{color:var(--green)}.negative{color:var(--red)}.empty{text-align:center;padding:22px;color:var(--muted);font-size:13px}.footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 25px}
 @media(min-width:720px){.cards{grid-template-columns:1.2fr 1fr 1fr}.wide{grid-column:span 2}.section-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px}.section-layout .section{margin-top:17px}}
-@keyframes floatOrb{0%,100%{transform:translate3d(0,0,0) rotate(0deg)}50%{transform:translate3d(-12px,14px,0) rotate(12deg)}}@keyframes cardEnter{from{opacity:0;transform:translateY(14px) rotateX(-2deg)}to{opacity:1;transform:translateY(0) rotateX(0)}}@keyframes popIn{0%{transform:scale(.96);opacity:.6}100%{transform:scale(1);opacity:1}}.balance .big{ text-shadow:0 2px 16px #ffffff20}.progress{box-shadow:inset 0 1px 2px #14213d0c}.mode button{border-radius:15px;transition:all .22s ease}.mode button.active-save,.mode button.active-spend{box-shadow:0 7px 18px #14213d0c;transform:translateY(-2px)}.field input:focus{box-shadow:0 0 0 4px #2563eb20,0 5px 16px #2563eb0c}.item{animation:popIn .3s ease both}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}@media(max-width:390px){.wrap{padding:0 11px}.card{padding:14px}.tag{display:none}.row{gap:8px}.big{font-size:24px}}
+@media(max-width:390px){.wrap{padding:0 11px}.card{padding:14px}.tag{display:none}.row{gap:8px}.big{font-size:24px}}
+
+/* Lapisan dekoratif: bubble 3D dan uang melayang */
+body{background:radial-gradient(circle at 8% 12%,#dbeafe 0,transparent 28%),radial-gradient(circle at 92% 42%,#ede9fe 0,transparent 30%),linear-gradient(135deg,#f7faff,#edf4ff 55%,#f8f5ff);background-attachment:fixed}
+.money-scene{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:-1;perspective:900px}
+.money-float{position:absolute;left:var(--x);top:110%;font-size:var(--size);opacity:0;color:#16a34a;text-shadow:0 5px 12px #14532d30;animation:moneyRise var(--duration) linear var(--delay) infinite;transform-style:preserve-3d;filter:drop-shadow(0 8px 7px #14532d1c)}
+.bubble{position:absolute;width:var(--diam);height:var(--diam);left:var(--x);top:var(--y);border-radius:50%;background:radial-gradient(circle at 28% 22%,#ffffffed 0 4%,#bfdbfeaa 18%,#60a5fa30 47%,#6366f115 70%,#ffffff40 100%);border:1px solid #ffffffb8;box-shadow:inset -8px -10px 18px #6366f11c,inset 5px 5px 14px #ffffffb8,0 15px 32px #64748b14;animation:bubbleDrift var(--duration) ease-in-out var(--delay) infinite alternate;transform-style:preserve-3d}
+.warning-card{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(125deg,#fff7ed,#ffedd5 55%,#fef3c7)!important;color:#7c2d12!important;border:1px solid #fdba74!important;box-shadow:0 12px 30px #ea580c1c!important;animation:warningBounce 2.8s cubic-bezier(.36,.07,.19,.97) infinite}
+.warning-card:after{content:"";position:absolute;z-index:-1;width:130px;height:130px;right:-38px;top:-48px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff9,#fb923c22 60%,transparent 72%);animation:floatOrb 4s ease-in-out infinite}
+.warning-heading{color:#9a3412!important}.warning-message{display:flex;align-items:center;gap:10px;font-size:clamp(16px,3.5vw,21px);line-height:1.35;font-weight:850}.warning-mascot{display:inline-grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,#fed7aa,#fb923c);box-shadow:inset 2px 2px 5px #fff9,0 5px 12px #c2410c25;font-size:23px;animation:mascotHop 1.8s ease-in-out infinite}
+.warning-detail{color:#9a3412!important}
+@keyframes moneyRise{0%{top:110%;opacity:0;transform:translate3d(0,0,-100px) rotateY(0) rotateZ(-18deg)}12%{opacity:.5}80%{opacity:.36}100%{top:-15%;opacity:0;transform:translate3d(40px,0,80px) rotateY(540deg) rotateZ(28deg)}}
+@keyframes bubbleDrift{0%{transform:translate3d(-10px,12px,-30px) rotateX(0) rotateY(0) scale(.88)}100%{transform:translate3d(18px,-25px,45px) rotateX(22deg) rotateY(32deg) scale(1.08)}}
+@keyframes warningBounce{0%,100%{transform:translateY(0) rotate(0)}8%{transform:translateY(-4px) rotate(-.3deg)}16%{transform:translateY(0) rotate(.2deg)}24%{transform:translateY(-2px)}32%{transform:translateY(0)}}
+@keyframes mascotHop{0%,100%{transform:translateY(0) rotate(0)}35%{transform:translateY(-7px) rotate(-7deg)}55%{transform:translateY(0) rotate(5deg)}70%{transform:translateY(-3px) rotate(0)}}
+@media(prefers-reduced-motion:reduce){.money-float,.bubble,.warning-card,.warning-mascot{animation:none!important}}
 </style>
 </head>
 <body>
-<header><div class="wrap"><div class="head"><div class="brand"><div class="logo">💰</div><div><h1>Dompet & Tabungan</h1><p>Atur uangmu dengan lebih terencana.</p></div></div><span class="tag">KEUANGAN PRIBADI</span></div></div></header>
+<div class="money-scene" id="moneyScene" aria-hidden="true"></div>
+<header><div class="wrap"><div class="head"><div class="brand"><div class="logo">💰</div><div><h1>Dompet & Tabungan</h1><p>Atur uangmu dengan lebih terencana.</p></div></div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><button id="soundToggle" type="button" class="btn-light" aria-pressed="true" style="padding:9px 12px">🔊 Suara aktif</button><span class="tag">KEUANGAN PRIBADI</span></div></div></div></header>
 <main class="wrap">
 
-<div id="lowBalanceWarning" role="alert" style="display:none;margin:0 0 15px;background:#7f1d1d;color:#fff;border:2px solid #ef4444;border-radius:15px;padding:15px 16px;font-weight:850;box-shadow:0 8px 24px #7f1d1d22">
- <div style="font-size:12px;letter-spacing:1px;margin-bottom:4px;color:#fecaca">⚠️ PERINGATAN DOMPET MENIPIS</div>
- <div style="font-size:clamp(16px,3.5vw,21px);line-height:1.35">HEH ANJING HEMAT GOBLOG, BOROS AMAT</div>
- <div style="font-size:12px;font-weight:500;margin-top:6px;color:#fee2e2">Saldo dompet di bawah Rp100.000. Tahan dulu belanja yang tidak penting.</div>
+<div id="lowBalanceWarning" class="warning-card" role="alert" aria-live="polite" style="display:none;margin:0 0 15px;border-radius:18px;padding:15px 16px;font-weight:850">
+ <div class="warning-heading" style="font-size:12px;letter-spacing:1px;margin-bottom:7px">⚠️ PENGINGAT DOMPET MENIPIS</div>
+ <div class="warning-message"><span class="warning-mascot" aria-hidden="true">🐷</span><span>Yuk, lebih hemat! Dompet perlu dijaga 😊</span></div>
+ <div class="warning-detail" style="font-size:12px;font-weight:550;margin-top:7px">Saldo dompet di bawah Rp100.000. Tunda dulu belanja yang tidak penting, ya. Sedikit demi sedikit, tujuan tabungan makin dekat!</div>
 </div>
 
 <section class="cards" aria-label="Ringkasan saldo">
@@ -43,7 +59,7 @@ input,select,button{font:inherit}input,select{width:100%;min-width:0;border:1px 
 <section class="section card">
  <h2 class="title">1. Tambahkan pemasukan</h2>
  <form id="incomeForm" novalidate>
-  <div class="field"><label class="label" for="incomeAmount">Nominal pemasukan (Rp)</label><input id="incomeAmount" type="text" inputmode="numeric" pattern="[0-9.,]*" autocomplete="off" placeholder="Contoh: 300000"></div>
+  <div class="field"><label class="label" for="incomeAmount">Nominal pemasukan (Rp)</label><input id="incomeAmount" type="number" min="1" step="any" inputmode="decimal" placeholder="Contoh: 300000" required></div>
   <div class="field"><label class="label" for="incomeNote">Sumber pemasukan</label><input id="incomeNote" maxlength="80" placeholder="Contoh: uang saku bulanan"></div>
   <button class="btn-blue" type="submit" style="width:100%">＋ Masukkan ke dompet</button>
  </form>
@@ -56,7 +72,7 @@ input,select,button{font:inherit}input,select{width:100%;min-width:0;border:1px 
   <button type="button" id="spendMode"><span class="emoji">🛍️</span>Pengeluaran<small>Uang digunakan</small></button>
  </div>
  <form id="actionForm" novalidate>
-  <div class="field"><label class="label" for="actionAmount">Nominal (Rp)</label><input id="actionAmount" type="text" inputmode="numeric" pattern="[0-9.,]*" autocomplete="off" placeholder="Masukkan nominal"></div>
+  <div class="field"><label class="label" for="actionAmount">Nominal (Rp)</label><input id="actionAmount" type="number" min="1" step="any" inputmode="decimal" placeholder="Masukkan nominal" required></div>
   <div class="field"><label class="label" for="actionNote">Catatan (opsional)</label><input id="actionNote" maxlength="80" placeholder="Contoh: tabungan mingguan"></div>
   <button id="actionSubmit" class="btn-green" type="submit" style="width:100%" disabled>Pindahkan ke tabungan</button>
  </form>
@@ -66,7 +82,7 @@ input,select,button{font:inherit}input,select{width:100%;min-width:0;border:1px 
 <section class="section card">
  <div class="between"><h2 class="title" style="margin:0">3. Target tabungan</h2><span class="muted">Bisa diubah kapan saja</span></div>
  <div class="row" style="margin-top:14px;align-items:end">
-  <div><label class="label" for="targetAmount">Target (Rp)</label><input id="targetAmount" type="text" inputmode="numeric" pattern="[0-9.,]*" autocomplete="off" value="2000000"></div>
+  <div><label class="label" for="targetAmount">Target (Rp)</label><input id="targetAmount" type="number" min="1" step="any" inputmode="decimal" value="2000000"></div>
   <div style="display:flex;align-items:end"><button id="saveTarget" type="button" class="btn-light" style="width:100%">Simpan target</button></div>
  </div>
  <div class="between" style="margin-top:17px"><span class="muted" id="progressText">Rp0 terkumpul</span><strong id="progressPct">0%</strong></div>
@@ -83,15 +99,57 @@ input,select,button{font:inherit}input,select{width:100%;min-width:0;border:1px 
 <footer class="footer">Dompet & Tabungan Pribadi · Data tersimpan di browser perangkat ini.</footer>
 <script>
 (function(){
+ const scene=document.getElementById('moneyScene');
+ if(scene){
+   const symbols=['＄','💵','＄','💸','＄','🪙'];
+   for(let i=0;i<15;i++){
+     const el=document.createElement('span');el.className='money-float';el.textContent=symbols[i%symbols.length];
+     el.style.setProperty('--x',(3+(i*17)%94)+'%');el.style.setProperty('--size',(18+(i%4)*8)+'px');
+     el.style.setProperty('--duration',(13+(i%7)*2)+'s');el.style.setProperty('--delay',(-1*(i%15)*1.7)+'s');scene.appendChild(el);
+   }
+   for(let i=0;i<8;i++){
+     const el=document.createElement('span');el.className='bubble';
+     el.style.setProperty('--x',(4+(i*13)%90)+'%');el.style.setProperty('--y',(8+(i*19)%82)+'%');
+     el.style.setProperty('--diam',(30+(i%4)*22)+'px');el.style.setProperty('--duration',(5+(i%5))+'s');
+     el.style.setProperty('--delay',(-i*.8)+'s');scene.appendChild(el);
+   }
+ }
  const $=id=>document.getElementById(id);
- const money=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(Number(n)||0);
- const parseAmount=value=>{const cleaned=String(value??'').trim().replace(/[^0-9]/g,'');return cleaned===''?NaN:Number(cleaned)};
+ const money=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n||0);
  const STORE='dompetTabunganPribadiV1';
+ // Efek suara dibuat secara lokal dengan Web Audio API; tidak perlu file audio eksternal.
+ let soundEnabled=true, audioCtx=null;
+ function playTransactionSound(kind){
+  if(!soundEnabled) return;
+  try{
+   const AudioContextClass=window.AudioContext||window.webkitAudioContext;
+   if(!AudioContextClass) return;
+   audioCtx=audioCtx||new AudioContextClass();
+   if(audioCtx.state==='suspended') audioCtx.resume();
+   const now=audioCtx.currentTime;
+   const sets={Pemasukan:[523.25,659.25,783.99,1046.5],Menabung:[392,523.25,659.25,783.99],Pengeluaran:[440,349.23,293.66]};
+   const notes=sets[kind]||sets.Pemasukan;
+   notes.forEach((freq,i)=>{
+    const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+    osc.type=(kind==='Pengeluaran'?'triangle':'sine');
+    osc.frequency.setValueAtTime(freq,now+i*.105);
+    gain.gain.setValueAtTime(0.0001,now+i*.105);
+    gain.gain.exponentialRampToValueAtTime(kind==='Pengeluaran'?0.12:0.16,now+i*.105+.018);
+    gain.gain.exponentialRampToValueAtTime(0.0001,now+i*.105+.24);
+    osc.connect(gain);gain.connect(audioCtx.destination);
+    osc.start(now+i*.105);osc.stop(now+i*.105+.26);
+   });
+   if(navigator.vibrate) navigator.vibrate(kind==='Pengeluaran'?[18,25,18]:[18]);
+  }catch(err){ /* Suara opsional; transaksi tetap berjalan jika audio tidak didukung. */ }
+ }
+ const soundToggle=document.getElementById('soundToggle');
+ if(soundToggle){soundToggle.addEventListener('click',()=>{soundEnabled=!soundEnabled;soundToggle.textContent=soundEnabled?'🔊 Suara aktif':'🔇 Suara mati';soundToggle.setAttribute('aria-pressed',String(soundEnabled));if(soundEnabled)playTransactionSound('Pemasukan')})}
+
  let state={wallet:0,savings:0,totalIncome:0,target:2000000,history:[],mode:'Menabung'};
  try{const x=JSON.parse(localStorage.getItem(STORE));if(x&&Array.isArray(x.history))state={...state,...x}}catch(e){}
  function persist(){try{localStorage.setItem(STORE,JSON.stringify(state))}catch(e){}render()}
  function switchMode(mode){state.mode=mode;$('saveMode').className=mode==='Menabung'?'active-save':'';$('spendMode').className=mode==='Pengeluaran'?'active-spend':'';$('actionSubmit').textContent=mode==='Menabung'?'Pindahkan ke tabungan':'Catat pengeluaran';$('actionSubmit').className=mode==='Menabung'?'btn-green':'btn-red';$('actionNote').placeholder=mode==='Menabung'?'Contoh: tabungan mingguan':'Contoh: makan siang';$('actionHelp').textContent=mode==='Menabung'?'Saldo dompet berkurang dan tabungan bertambah dengan jumlah yang sama.':'Saldo dompet berkurang sesuai pengeluaran. Tabungan tidak berubah.';validateAction()}
- function validateAction(){const n=parseAmount($('actionAmount').value);$('actionSubmit').disabled=!(Number.isFinite(n)&&n>0&&n<=state.wallet)}
+ function validateAction(){const n=Number($('actionAmount').value);$('actionSubmit').disabled=!(n>0&&n<=state.wallet)}
  function render(){
   $('walletBalance').textContent=money(state.wallet);$('savingsBalance').textContent=money(state.savings);$('incomeTotal').textContent=money(state.totalIncome);
   $('lowBalanceWarning').style.display=state.wallet<100000?'block':'none';
@@ -112,11 +170,11 @@ input,select,button{font:inherit}input,select{width:100%;min-width:0;border:1px 
   });
   validateAction();
  }
- $('incomeForm').addEventListener('submit',e=>{e.preventDefault();const raw=$('incomeAmount').value.trim();const n=parseAmount(raw);if(raw===''||!Number.isFinite(n)||!(n>0)){alert('Masukkan nominal pemasukan berupa angka lebih dari 0.');$('incomeAmount').focus();return;}state.wallet+=n;state.totalIncome+=n;state.history.unshift({type:'Pemasukan',amount:n,note:$('incomeNote').value.trim()||'Pemasukan',date:new Date().toLocaleDateString('id-ID')});$('incomeAmount').value='';$('incomeNote').value='';persist()});
+ $('incomeForm').addEventListener('submit',e=>{e.preventDefault();const raw=$('incomeAmount').value.trim();const n=Number(raw);if(raw===''||!Number.isFinite(n)||!(n>0)){alert('Masukkan nominal pemasukan berupa angka lebih dari 0.');$('incomeAmount').focus();return;}state.wallet+=n;state.totalIncome+=n;state.history.unshift({type:'Pemasukan',amount:n,note:$('incomeNote').value.trim()||'Pemasukan',date:new Date().toLocaleDateString('id-ID')});$('incomeAmount').value='';$('incomeNote').value='';playTransactionSound('Pemasukan');persist()});
  $('saveMode').addEventListener('click',()=>switchMode('Menabung'));$('spendMode').addEventListener('click',()=>switchMode('Pengeluaran'));
  $('actionAmount').addEventListener('input',validateAction);
- $('actionForm').addEventListener('submit',e=>{e.preventDefault();const raw=$('actionAmount').value.trim();const n=parseAmount(raw);if(raw===''||!Number.isFinite(n)||!(n>0)||n>state.wallet){alert('Nominal tidak valid atau saldo dompet tidak mencukupi.');return}const type=state.mode;state.wallet-=n;if(type==='Menabung')state.savings+=n;state.history.unshift({type,amount:n,note:$('actionNote').value.trim()||(type==='Menabung'?'Setoran tabungan':'Pengeluaran'),date:new Date().toLocaleDateString('id-ID')});$('actionAmount').value='';$('actionNote').value='';persist()});
- $('saveTarget').addEventListener('click',()=>{const n=parseAmount($('targetAmount').value);if(!Number.isFinite(n)||!(n>0)){alert('Target harus lebih dari nol.');return}state.target=n;persist();alert('Target tabungan disimpan.')});
+ $('actionForm').addEventListener('submit',e=>{e.preventDefault();const raw=$('actionAmount').value.trim();const n=Number(raw);if(raw===''||!Number.isFinite(n)||!(n>0)||n>state.wallet){alert('Nominal tidak valid atau saldo dompet tidak mencukupi.');return}const type=state.mode;state.wallet-=n;if(type==='Menabung')state.savings+=n;state.history.unshift({type,amount:n,note:$('actionNote').value.trim()||(type==='Menabung'?'Setoran tabungan':'Pengeluaran'),date:new Date().toLocaleDateString('id-ID')});$('actionAmount').value='';$('actionNote').value='';playTransactionSound(type);persist()});
+ $('saveTarget').addEventListener('click',()=>{const n=Number($('targetAmount').value);if(!(n>0)){alert('Target harus lebih dari nol.');return}state.target=n;persist();alert('Target tabungan disimpan.')});
  $('exportBtn').addEventListener('click',()=>{const rows=[['Tanggal','Jenis','Catatan','Nominal'],...state.history.map(t=>[t.date,t.type,t.note,t.amount])];const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='riwayat-dompet-tabungan.csv';a.click();URL.revokeObjectURL(url)});
  $('resetBtn').addEventListener('click',()=>{if(confirm('Yakin ingin menghapus seluruh saldo dan riwayat transaksi di browser ini?')){state={wallet:0,savings:0,totalIncome:0,target:2000000,history:[],mode:'Menabung'};persist();switchMode('Menabung')}});
  switchMode(state.mode);render();
